@@ -123,6 +123,33 @@ plox/fast:
 	$(MAKE) -f CMakeFiles/plox.dir/build.make CMakeFiles/plox.dir/build
 .PHONY : plox/fast
 
+Individual.o: Individual.cpp.o
+
+.PHONY : Individual.o
+
+# target to build an object file
+Individual.cpp.o:
+	$(MAKE) -f CMakeFiles/plox.dir/build.make CMakeFiles/plox.dir/Individual.cpp.o
+.PHONY : Individual.cpp.o
+
+Individual.i: Individual.cpp.i
+
+.PHONY : Individual.i
+
+# target to preprocess a source file
+Individual.cpp.i:
+	$(MAKE) -f CMakeFiles/plox.dir/build.make CMakeFiles/plox.dir/Individual.cpp.i
+.PHONY : Individual.cpp.i
+
+Individual.s: Individual.cpp.s
+
+.PHONY : Individual.s
+
+# target to generate assembly for a file
+Individual.cpp.s:
+	$(MAKE) -f CMakeFiles/plox.dir/build.make CMakeFiles/plox.dir/Individual.cpp.s
+.PHONY : Individual.cpp.s
+
 Program.o: Program.cpp.o
 
 .PHONY : Program.o
@@ -149,6 +176,33 @@ Program.s: Program.cpp.s
 Program.cpp.s:
 	$(MAKE) -f CMakeFiles/plox.dir/build.make CMakeFiles/plox.dir/Program.cpp.s
 .PHONY : Program.cpp.s
+
+Utils.o: Utils.cpp.o
+
+.PHONY : Utils.o
+
+# target to build an object file
+Utils.cpp.o:
+	$(MAKE) -f CMakeFiles/plox.dir/build.make CMakeFiles/plox.dir/Utils.cpp.o
+.PHONY : Utils.cpp.o
+
+Utils.i: Utils.cpp.i
+
+.PHONY : Utils.i
+
+# target to preprocess a source file
+Utils.cpp.i:
+	$(MAKE) -f CMakeFiles/plox.dir/build.make CMakeFiles/plox.dir/Utils.cpp.i
+.PHONY : Utils.cpp.i
+
+Utils.s: Utils.cpp.s
+
+.PHONY : Utils.s
+
+# target to generate assembly for a file
+Utils.cpp.s:
+	$(MAKE) -f CMakeFiles/plox.dir/build.make CMakeFiles/plox.dir/Utils.cpp.s
+.PHONY : Utils.cpp.s
 
 VertexBuffer.o: VertexBuffer.cpp.o
 
@@ -213,9 +267,15 @@ help:
 	@echo "... rebuild_cache"
 	@echo "... edit_cache"
 	@echo "... plox"
+	@echo "... Individual.o"
+	@echo "... Individual.i"
+	@echo "... Individual.s"
 	@echo "... Program.o"
 	@echo "... Program.i"
 	@echo "... Program.s"
+	@echo "... Utils.o"
+	@echo "... Utils.i"
+	@echo "... Utils.s"
 	@echo "... VertexBuffer.o"
 	@echo "... VertexBuffer.i"
 	@echo "... VertexBuffer.s"

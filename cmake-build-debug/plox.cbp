@@ -84,10 +84,22 @@
 				</MakeCommands>
 			</Target>
 		</Build>
+		<Unit filename="/home/hugo/cpp-projects/genetic-gl/Individual.cpp">
+			<Option target="plox"/>
+		</Unit>
+		<Unit filename="/home/hugo/cpp-projects/genetic-gl/Individual.h">
+			<Option target="plox"/>
+		</Unit>
 		<Unit filename="/home/hugo/cpp-projects/genetic-gl/Program.cpp">
 			<Option target="plox"/>
 		</Unit>
 		<Unit filename="/home/hugo/cpp-projects/genetic-gl/Program.h">
+			<Option target="plox"/>
+		</Unit>
+		<Unit filename="/home/hugo/cpp-projects/genetic-gl/Utils.cpp">
+			<Option target="plox"/>
+		</Unit>
+		<Unit filename="/home/hugo/cpp-projects/genetic-gl/Utils.h">
 			<Option target="plox"/>
 		</Unit>
 		<Unit filename="/home/hugo/cpp-projects/genetic-gl/VertexBuffer.cpp">

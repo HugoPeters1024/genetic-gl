@@ -6,15 +6,19 @@
 
 #include <GL/gl.h>
 #include <GLFW/glfw3.h>
+#include <unistd.h>
 
 
 #include "VertexBuffer.h"
 #include "Program.h"
+#include "Utils.h"
+#include "Individual.h"
 
 static VertexBufferUv vbQuad;
 static VertexBufferColor vbTriangles;
 static Program shader;
 float iTime = 0.0f;
+Individual boi;
 
 
 static float vsQuad[] = {
@@ -58,6 +62,7 @@ static const char* fragmentShaderSource = R"(
 #extension GL_ARB_explicit_uniform_location : enable
 layout(location = 0) out vec4 frag_color;
 layout(location = 0) uniform float iTime;
+
 layout(location = 0) in vec3 aPos;
 layout(location = 1) in vec4 aCol;
 
@@ -68,50 +73,28 @@ void main()
 )";
 
 
-float randomf()
-{
-    return static_cast <float> (rand()) / static_cast <float> (RAND_MAX);
-}
-
-
 void setup(int width, int height)
 {
     std::cout << "Setting things up" << std::endl;
     shader = Program(vertexShaderSource, fragmentShaderSource);
-    vbQuad = VertexBufferUv(
-            std::begin(vsQuad), std::end(vsQuad),
-            std::begin(vsUnitUvs), std::end(vsUnitUvs),
-            GL_TRIANGLE_STRIP);
-
-    for(int i=0; i<200; i++) {
-        vsTriangles.push_back(randomf() * 2 - 1);
-        vsTriangles.push_back(randomf() * 2 - 1);
-        vsTriangles.push_back(1.0f);
-        vsTrianglesCol.push_back(randomf());
-        vsTrianglesCol.push_back(randomf());
-        vsTrianglesCol.push_back(randomf());
-        vsTrianglesCol.push_back(randomf());
-    }
-    vbTriangles = VertexBufferColor(
-            vsTriangles.data(), vsTriangles.data() + vsTriangles.capacity(),
-            vsTrianglesCol.data(), vsTrianglesCol.data() + vsTrianglesCol.capacity(),
-            GL_TRIANGLES);
+    boi = Individual();
 }
 
 void render(int width, int height)
 {
     glViewport(0, 0, width, height);
     glClear(GL_COLOR_BUFFER_BIT);
-    using namespace std;
 
     glEnable(GL_BLEND);
     glBlendFunc(GL_SRC_ALPHA, GL_ONE);
 
+
     shader.setupDraw();
     glUniform1f(0, iTime);
-   // vbQuad.draw();
-    vbTriangles.draw();
+    boi.Draw();
+    boi.Mutate();
 }
+
 
 void reportError(GLenum, GLenum, GLuint, GLenum severity, GLsizei length, const GLchar* message, const void* userParam) {
     fprintf(stderr, "%s\n", message);
@@ -120,6 +103,7 @@ void reportError(GLenum, GLenum, GLuint, GLenum severity, GLsizei length, const 
 }
 
 int main(int argc, char** argv) {
+    glFinish();
     GLFWwindow* window;
 
     if(!glfwInit()) return 2;
@@ -129,8 +113,7 @@ int main(int argc, char** argv) {
     glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
-    window = glfwCreateWindow(720, 720, "Demo", nullptr, nullptr);
-
+    window = glfwCreateWindow(720, 720, "Genetic GL", nullptr, nullptr);
 
     if (!window) return -1;
     glfwMakeContextCurrent(window);
