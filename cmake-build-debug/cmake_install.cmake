@@ -1,4 +1,4 @@
-# Install script for directory: /home/hugo/cpp-projects/plox
+# Install script for directory: /home/hugo/cpp-projects/genetic-gl
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
@@ -45,5 +45,5 @@ endif()
 
 string(REPLACE ";" "\n" CMAKE_INSTALL_MANIFEST_CONTENT
        "${CMAKE_INSTALL_MANIFEST_FILES}")
-file(WRITE "/home/hugo/cpp-projects/plox/cmake-build-debug/${CMAKE_INSTALL_MANIFEST}"
+file(WRITE "/home/hugo/cpp-projects/genetic-gl/cmake-build-debug/${CMAKE_INSTALL_MANIFEST}"
      "${CMAKE_INSTALL_MANIFEST_CONTENT}")

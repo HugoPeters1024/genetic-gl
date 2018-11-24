@@ -6,11 +6,29 @@
 
 #IncludeRegexTransform: 
 
-/home/hugo/cpp-projects/plox/main.cpp
+/home/hugo/cpp-projects/genetic-gl/Program.h
+iostream
+-
+vector
+-
+GL/gl.h
+-
+
+/home/hugo/cpp-projects/genetic-gl/VertexBuffer.h
+glob.h
+-
+GL/gl.h
+-
+
+/home/hugo/cpp-projects/genetic-gl/main.cpp
 iostream
 -
 GL/gl.h
 -
 GLFW/glfw3.h
 -
+VertexBuffer.h
+/home/hugo/cpp-projects/genetic-gl/VertexBuffer.h
+Program.h
+/home/hugo/cpp-projects/genetic-gl/Program.h
 

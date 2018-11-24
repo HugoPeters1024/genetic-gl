@@ -1,1 +1,1 @@
-/usr/bin/c++  -g   CMakeFiles/plox.dir/main.cpp.o  -o plox -lglfw -lOpenGL 
+/usr/bin/c++  -g   CMakeFiles/plox.dir/main.cpp.o CMakeFiles/plox.dir/VertexBuffer.cpp.o CMakeFiles/plox.dir/Program.cpp.o  -o plox -lglfw -lOpenGL 
