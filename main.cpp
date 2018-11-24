@@ -18,6 +18,8 @@ static VertexBufferUv vbQuad;
 static VertexBufferColor vbTriangles;
 static Program shader;
 float iTime = 0.0f;
+Individual mother;
+Individual father;
 Individual boi;
 
 
@@ -77,7 +79,9 @@ void setup(int width, int height)
 {
     std::cout << "Setting things up" << std::endl;
     shader = Program(vertexShaderSource, fragmentShaderSource);
-    boi = Individual();
+    father = Individual();
+    mother = Individual();
+    boi = Individual(father, mother);
 }
 
 void render(int width, int height)
@@ -88,11 +92,10 @@ void render(int width, int height)
     glEnable(GL_BLEND);
     glBlendFunc(GL_SRC_ALPHA, GL_ONE);
 
-
     shader.setupDraw();
-    glUniform1f(0, iTime);
+    boi = Individual(mother, father);
     boi.Draw();
-    boi.Mutate();
+    glUniform1f(0, iTime);
 }
 
 

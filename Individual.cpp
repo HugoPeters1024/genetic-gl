@@ -15,29 +15,31 @@ Individual::Individual() {
     this->Randomize();
     this->vb = VertexBufferColor(
             vertices.data(), vertices.data() + vertices.capacity(),
-            colors.data(), colors.data() + vertices.capacity(),
+            colors.data(), colors.data() + colors.capacity(),
             GL_TRIANGLES);
 }
 
-Individual::Individual(const Individual *father, const Individual *mother) {
+Individual::Individual(const Individual &father, const Individual &mother) {
     this->vertices = std::vector<float>(GENOME_SIZE * 3);
     this->colors = std::vector<float>(GENOME_SIZE * 4);
-    bool unary = false;
-    for(int i=0; i<GENOME_SIZE * 3; i+=3)
+    bool unary = true;
+    for(int i=0, j=0; i<GENOME_SIZE*3; i+=3, j+=4)
     {
-        if (Utils::randomf() < GENOME_SIZE) unary = !unary;
-        if (unary)
-        {
-            this->vertices[i+0] = father->vertices[i+0];
-            this->vertices[i+1] = father->vertices[i+1];
-            this->vertices[i+2] = father->vertices[i+2];
-        } else {
-            this->vertices[i+0] = mother->vertices[i+0];
-            this->vertices[i+1] = mother->vertices[i+1];
-            this->vertices[i+2] = mother->vertices[i+2];
-        }
-    }
+        if (Utils::randomf() < CROSS_OVER_RATE) unary = !unary;
+        const Individual* src = unary ? &father : &mother;
+        this->vertices[i+0] = src->vertices[i+0];
+        this->vertices[i+1] = src->vertices[i+1];
+        this->vertices[i+2] = src->vertices[i+2];
 
+        this->colors[j+0] = src->colors[j+0];
+        this->colors[j+1] = src->colors[j+1];
+        this->colors[j+2] = src->colors[j+2];
+        this->colors[j+3] = src->colors[j+3];
+    }
+    this->vb = VertexBufferColor(
+            vertices.data(), vertices.data() + vertices.capacity(),
+            colors.data(), colors.data() + colors.capacity(),
+            GL_TRIANGLES);
 }
 
 void Individual::Randomize() {

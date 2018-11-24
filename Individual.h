@@ -15,7 +15,7 @@
 
 #define GENOME_SIZE 1000
 #define MUTATION_RATE 0.01f
-#define CROSS_OVER_RATE 0.30f;
+#define CROSS_OVER_RATE 0.30f
 
 
 class Individual {
@@ -29,7 +29,7 @@ private:
 
 public:
     Individual();
-    Individual(const Individual* father, const Individual* mother);
+    Individual(const Individual &father, const Individual &mother);
     void Draw();
     void Mutate();
 };
