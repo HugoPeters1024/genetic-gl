@@ -12,21 +12,36 @@
 #include <GL/gl.h>
 
 class VertexBuffer {
-private:
+protected:
     unsigned int vboPos;
-    unsigned int vboUv;
     unsigned int vao;
     size_t posSize;
-    size_t uvSize;
     GLenum mode;
 
 public:
-    VertexBuffer(void);
-
-    VertexBuffer(float* posBegin, float* posEnd, float* uvBegin, float* uvEnd, GLenum mode);
-
+    VertexBuffer() = default;
+    VertexBuffer(float* posBegin, float* posEnd, GLenum mode);
     void draw() const;
 };
 
+class VertexBufferUv : public VertexBuffer {
+private:
+    unsigned int vboUv;
+    size_t uvSize;
+
+public:
+    VertexBufferUv() = default;
+    VertexBufferUv(float* posBegin, float* posEnd, float* uvBegin, float* uvEnd, GLenum mode);
+};
+
+class VertexBufferColor : public VertexBuffer {
+private:
+    unsigned int vboCol;
+    size_t colSize;
+
+public:
+    VertexBufferColor() = default;
+    VertexBufferColor(float* posBegin, float* posEnd, float* colBegin, float* colEnd, GLenum mode);
+};
 
 #endif //PLOX_VERTEXBUFFER_H

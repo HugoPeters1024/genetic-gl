@@ -4,27 +4,20 @@
 
 #include "VertexBuffer.h"
 
-VertexBuffer::VertexBuffer() = default;
-
-VertexBuffer::VertexBuffer(float *posBegin, float *posEnd, float* uvBegin, float* uvEnd, GLenum mode) {
+VertexBuffer::VertexBuffer(float *posBegin, float *posEnd, GLenum mode) {
     this->mode = mode;
     this->posSize = posEnd - posBegin;
-    this->uvSize = uvEnd - uvBegin;
 
     glGenBuffers(1, &vboPos);
-    glGenBuffers(1, &vboUv);
     glGenVertexArrays(1, &vao);
 
     glBindBuffer(GL_ARRAY_BUFFER, vboPos);
     glBufferData(GL_ARRAY_BUFFER, posSize * sizeof(float), posBegin, GL_STATIC_DRAW);
 
-    glBindBuffer(GL_ARRAY_BUFFER, vboUv);
-    glBufferData(GL_ARRAY_BUFFER, uvSize * sizeof(float), uvBegin, GL_STATIC_DRAW);
 
     glBindVertexArray(vao);
 
     glEnableVertexAttribArray(0);
-    glEnableVertexAttribArray(1);
 
 
     glBindBuffer(GL_ARRAY_BUFFER, vboPos);
@@ -36,6 +29,24 @@ VertexBuffer::VertexBuffer(float *posBegin, float *posEnd, float* uvBegin, float
             0, // Stride: tightly packed
             nullptr
     );
+}
+
+void VertexBuffer::draw() const
+{
+    glBindVertexArray(vao);
+    glDrawArrays(mode, 0, posSize / 3);
+}
+
+VertexBufferUv::VertexBufferUv(float *posBegin, float *posEnd, float *uvBegin, float *uvEnd, GLenum mode)
+    : VertexBuffer(posBegin, posEnd, mode)
+{
+    this->uvSize = uvEnd - uvBegin;
+    glGenBuffers(1, &vboUv);
+
+    glBindBuffer(GL_ARRAY_BUFFER, vboUv);
+    glBufferData(GL_ARRAY_BUFFER, uvSize * sizeof(float), uvBegin, GL_STATIC_DRAW);
+
+    glEnableVertexAttribArray(1);
 
     glBindBuffer(GL_ARRAY_BUFFER, vboUv);
     glVertexAttribPointer(
@@ -48,8 +59,23 @@ VertexBuffer::VertexBuffer(float *posBegin, float *posEnd, float* uvBegin, float
     );
 }
 
-void VertexBuffer::draw() const
+VertexBufferColor::VertexBufferColor(float* posBegin, float* posEnd, float* colBegin, float * colEnd, GLenum mode)
+    : VertexBuffer(posBegin, posEnd, mode)
 {
-    glBindVertexArray(vao);
-    glDrawArrays(mode, 0, posSize / 3);
+    this->colSize = colEnd - colBegin;
+    glGenBuffers(1, &vboCol);
+
+    glBindBuffer(GL_ARRAY_BUFFER, vboCol);
+    glBufferData(GL_ARRAY_BUFFER, colSize * sizeof(float), colBegin, GL_STATIC_DRAW);
+
+    glEnableVertexAttribArray(2);
+
+    glBindBuffer(GL_ARRAY_BUFFER, vboCol);
+    glVertexAttribPointer(
+            2, // Attribute index,
+            4, // Elements per color
+            GL_FLOAT,
+            GL_FALSE, // Normalized
+            0,
+            nullptr);
 }

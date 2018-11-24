@@ -15,7 +15,7 @@
 
 
 class Program {
-private:
+protected:
     unsigned int vertexShader;
     unsigned int fragmentShader;
     unsigned int shaderProgram;
@@ -26,6 +26,5 @@ public:
 
     void setupDraw() const;
 };
-
 
 #endif //PLOX_PROGRAM_H

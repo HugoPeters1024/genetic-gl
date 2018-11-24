@@ -11,12 +11,11 @@ Program::Program(const char *vertexShaderSource, const char *fragmentShaderSourc
     glCompileShader(vertexShader);
 
     // Print status report
-    /*
     GLint logSize = 0;
     glGetShaderiv(vertexShader, GL_INFO_LOG_LENGTH, &logSize);
     std::vector<GLchar> vertexLog(logSize);
     glGetShaderInfoLog(vertexShader, logSize, &logSize, &vertexLog[0]);
-    std::cout << "Vertex shader log:" << std::endl << &vertexLog[0] << std::endl; */
+    std::cout << "Vertex shader log:" << std::endl << &vertexLog[0] << std::endl;
 
     // Compile fragment shader
     this->fragmentShader = glCreateShader(GL_FRAGMENT_SHADER);
@@ -24,10 +23,10 @@ Program::Program(const char *vertexShaderSource, const char *fragmentShaderSourc
     glCompileShader(fragmentShader);
 
     // Print status report
-    GLint logSize;
-    glGetShaderiv(vertexShader, GL_INFO_LOG_LENGTH, &logSize);
-    std::vector<GLchar> framentLog(logSize);
-    glGetShaderInfoLog(vertexShader, logSize, &logSize, &framentLog[0]);
+    GLint size;
+    glGetShaderiv(vertexShader, GL_INFO_LOG_LENGTH, &size);
+    std::vector<GLchar> framentLog(size);
+    glGetShaderInfoLog(vertexShader, size, &size, &framentLog[0]);
     std::cout << "Fragment shader log:" << std::endl << &framentLog[0] << std::endl;
 
     shaderProgram = glCreateProgram();
@@ -39,4 +38,3 @@ Program::Program(const char *vertexShaderSource, const char *fragmentShaderSourc
 void Program::setupDraw() const {
     glUseProgram(shaderProgram);
 }
-

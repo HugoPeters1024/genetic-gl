@@ -23,6 +23,8 @@ GL/gl.h
 /home/hugo/cpp-projects/genetic-gl/main.cpp
 iostream
 -
+math.h
+-
 GL/gl.h
 -
 GLFW/glfw3.h
