@@ -90,6 +90,12 @@
 		<Unit filename="/home/hugo/cpp-projects/genetic-gl/Individual.h">
 			<Option target="plox"/>
 		</Unit>
+		<Unit filename="/home/hugo/cpp-projects/genetic-gl/Population.cpp">
+			<Option target="plox"/>
+		</Unit>
+		<Unit filename="/home/hugo/cpp-projects/genetic-gl/Population.h">
+			<Option target="plox"/>
+		</Unit>
 		<Unit filename="/home/hugo/cpp-projects/genetic-gl/Program.cpp">
 			<Option target="plox"/>
 		</Unit>

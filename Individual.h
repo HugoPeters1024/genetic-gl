@@ -13,8 +13,8 @@
 #define PLOX_INDIVIDUAL_H
 
 
-#define GENOME_SIZE 400
-#define MUTATION_RATE 0.01f
+#define GENOME_SIZE 80
+#define MUTATION_RATE 0.1f
 #define CROSS_OVER_RATE 0.30f
 
 

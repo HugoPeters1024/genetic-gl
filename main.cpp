@@ -18,6 +18,7 @@
 #include "Utils.h"
 #include "Individual.h"
 #include "RenderFactory.h"
+#include "Population.h"
 
 static VertexBufferUv vbQuad;
 static VertexBufferColor vbTriangles;
@@ -26,6 +27,7 @@ static std::vector<unsigned char> fbSource;
 float iTime = 0.0f;
 double prevScore = std::numeric_limits<double>::max();
 Individual* boi;
+Population* population;
 
 
 static float vsQuad[] = {
@@ -84,62 +86,33 @@ void setup(int width, int height)
 {
     std::cout << "Setting things up" << std::endl;
     RenderFactory::Startup();
-    fbSource = std::vector<unsigned char>(static_cast<unsigned long>(width * height * 4L));
-    for(int i=0; i<fbSource.capacity(); i+=4)
+    fbSource = std::vector<unsigned char>(static_cast<unsigned long>(width * height * 3L));
+    for(int i=0; i<fbSource.capacity(); i+=3)
     {
-        fbSource[i+0] = (char)255;
-        fbSource[i+1] = (char)255;
-        fbSource[i+2] = (char)255;
-        fbSource[i+3] = (char)255;
+        fbSource[i+0] = (unsigned char)255;
+        fbSource[i+1] = (unsigned char)0;
+        fbSource[i+2] = (unsigned char)0;
     }
     shader = Program(vertexShaderSource, fragmentShaderSource);
     boi = new Individual();
-}
-
-double GetScore()
-{
-    size_t size = SCREEN_WIDTH * SCREEN_HEIGHT * sizeof(char) * 3;
-    unsigned char* data = (unsigned char*)malloc(size);
-    glReadPixels(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT, GL_RGB, GL_BYTE, data);
-    unsigned long sum = 0;
-    for(int y=0; y<SCREEN_HEIGHT; y++)
-    {
-        for(int x=0; x<SCREEN_WIDTH*3; x+=3)
-        {
-            long diff;
-            diff = data[x + y * SCREEN_WIDTH + 0] - fbSource[x + y * SCREEN_WIDTH + 0];
-            sum += diff * diff;
-            diff = data[x + y * SCREEN_WIDTH + 1] - fbSource[x + y * SCREEN_WIDTH + 1];
-            sum += diff * diff;
-            diff = data[x + y * SCREEN_WIDTH + 2] - fbSource[x + y * SCREEN_WIDTH + 2];
-            sum += diff * diff;
-        }
-    }
-    free(data);
-    return sqrt(sum);
+    population = new Population(fbSource.data());
 }
 
 void render(int width, int height)
 {
-    glFinish();
-    glViewport(0, 0, width, height);
-    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    for(int i=0; i<POP_SIZE; i++) {
+        glViewport(0, 0, width, height);
+        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-    glEnable(GL_BLEND);
-    glBlendFunc(GL_SRC_ALPHA, GL_ONE);
+        glEnable(GL_BLEND);
+        glBlendFunc(GL_SRC_ALPHA, GL_ONE);
 
-    shader.setupDraw();
-    glUniform1f(0, iTime);
+        shader.setupDraw();
+        glUniform1f(0, iTime);
 
-    Individual* mutant = new Individual(boi->Mutate());
-    RenderFactory::RenderIndividual(mutant);
-    double score = GetScore();
-    if (score < prevScore) {
-        printf("%f\n", score);
-        prevScore = score;
-        std::swap(boi, mutant);
+        population->NextGeneration();
+        glfwSwapBuffers(Utils::window);
     }
-    delete(mutant);
 }
 
 
@@ -150,8 +123,6 @@ void reportError(GLenum, GLenum, GLuint, GLenum severity, GLsizei length, const 
 }
 
 int main(int argc, char** argv) {
-    GLFWwindow* window;
-
     if(!glfwInit()) return 2;
 
     if (!glfwInit()) return -2;
@@ -159,26 +130,26 @@ int main(int argc, char** argv) {
     glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
-    window = glfwCreateWindow(SCREEN_WIDTH, SCREEN_HEIGHT, "Genetic GL", nullptr, nullptr);
+    Utils::window = glfwCreateWindow(SCREEN_WIDTH, SCREEN_HEIGHT, "Genetic GL", nullptr, nullptr);
 
-    if (!window) return -1;
-    glfwMakeContextCurrent(window);
+    if (!Utils::window) return -1;
+    glfwMakeContextCurrent(Utils::window);
 
     glDebugMessageCallback(reportError, nullptr);
     glEnable(GL_DEBUG_OUTPUT);
 
     int width, height;
-    glfwGetFramebufferSize(window, &width, &height);
+    glfwGetFramebufferSize(Utils::window, &width, &height);
 
     // Enable vsync
-    glfwSwapInterval(0);
+    glfwSwapInterval(1);
 
     setup(width, height);
 
-    while(!glfwWindowShouldClose(window))
+    while(!glfwWindowShouldClose(Utils::window))
     {
         render(width, height);
-        glfwSwapBuffers(window);
+        glfwSwapBuffers(Utils::window);
         glfwPollEvents();
         iTime += 0.01f;
     }
