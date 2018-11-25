@@ -3,6 +3,7 @@
 //
 #include <iostream>
 #include <cstdlib>
+#include <cstring>
 
 
 #include "Individual.h"
@@ -13,10 +14,6 @@ Individual::Individual() {
     this->colors = std::vector<float>(GENOME_SIZE * 4);
 
     this->Randomize();
-    this->vb = VertexBufferColor(
-            vertices.data(), vertices.data() + vertices.capacity(),
-            colors.data(), colors.data() + colors.capacity(),
-            GL_TRIANGLES);
 }
 
 Individual::Individual(const Individual &father, const Individual &mother) {
@@ -36,10 +33,6 @@ Individual::Individual(const Individual &father, const Individual &mother) {
         this->colors[j+2] = src->colors[j+2];
         this->colors[j+3] = src->colors[j+3];
     }
-    this->vb = VertexBufferColor(
-            vertices.data(), vertices.data() + vertices.capacity(),
-            colors.data(), colors.data() + colors.capacity(),
-            GL_TRIANGLES);
 }
 
 void Individual::Randomize() {
@@ -52,31 +45,29 @@ void Individual::Randomize() {
         this->colors[i+0] = Utils::randomf();
         this->colors[i+1] = Utils::randomf();
         this->colors[i+2] = Utils::randomf();
-        this->colors[i+3] = Utils::randomf() * 0.02f;
+        this->colors[i+3] = Utils::randomf() * 0.2f;
     }
 }
 
-void Individual::Mutate() {
+Individual Individual::Mutate() {
+    Individual result = Individual(this);
+
     for(int i=0; i<GENOME_SIZE * 3; i+=3) {
-        if (Utils::randomf() > MUTATION_RATE) continue;
-        vertices[i+0] = Utils::randomf() * 2 -1;
-        if (Utils::randomf() > MUTATION_RATE) continue;
-        vertices[i+1] = Utils::randomf() * 2 -1;
-        if (Utils::randomf() > MUTATION_RATE) continue;
-        vertices[i+2] = 0.0f;
+        if (Utils::randomf() < MUTATION_RATE) result.vertices[i+0] = Utils::randomNonUniformf();
+        if (Utils::randomf() < MUTATION_RATE) result.vertices[i+1] = Utils::randomNonUniformf();
     }
     for (int i=0; i<GENOME_SIZE * 4; i+=4) {
-        if (Utils::randomf() > MUTATION_RATE) continue;
-        colors[i+0] = Utils::randomf();
-        if (Utils::randomf() > MUTATION_RATE) continue;
-        colors[i+1] = Utils::randomf();
-        if (Utils::randomf() > MUTATION_RATE) continue;
-        colors[i+2] = Utils::randomf();
-        if (Utils::randomf() > MUTATION_RATE) continue;
-        colors[i+3] = Utils::randomf() * 0.02f;
+        if (Utils::randomf() < MUTATION_RATE) result.colors[i + 0] = Utils::randomf();
+        if (Utils::randomf() < MUTATION_RATE) result.colors[i + 1] = Utils::randomf();
+        if (Utils::randomf() < MUTATION_RATE) result.colors[i + 2] = Utils::randomf();
+        //if (Utils::randomf() < MUTATION_RATE) result.colors[i + 3] = Utils::randomf() * 0.5f;
     }
+    return result;
 }
 
-void Individual::Draw() {
-    vb.Draw(true);
+Individual::Individual(const Individual* source) {
+    this->vertices = std::vector<float>(source->vertices);
+    this->colors = std::vector<float>(source->colors);
 }
+
+Individual::~Individual() = default;

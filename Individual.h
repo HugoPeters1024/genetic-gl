@@ -13,25 +13,25 @@
 #define PLOX_INDIVIDUAL_H
 
 
-#define GENOME_SIZE 1000
+#define GENOME_SIZE 40
 #define MUTATION_RATE 0.01f
 #define CROSS_OVER_RATE 0.30f
 
 
 class Individual {
-private:
+public:
     std::vector<float> vertices;
     std::vector<float> colors;
-    VertexBufferColor vb;
 
     void Randomize();
 
 
 public:
     Individual();
+    Individual(const Individual* source);
     Individual(const Individual &father, const Individual &mother);
-    void Draw();
-    void Mutate();
+    ~Individual();
+    Individual Mutate();
 };
 
 

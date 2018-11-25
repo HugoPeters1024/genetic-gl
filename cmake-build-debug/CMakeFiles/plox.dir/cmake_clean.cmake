@@ -4,6 +4,7 @@ file(REMOVE_RECURSE
   "CMakeFiles/plox.dir/Program.cpp.o"
   "CMakeFiles/plox.dir/Utils.cpp.o"
   "CMakeFiles/plox.dir/Individual.cpp.o"
+  "CMakeFiles/plox.dir/RenderFactory.cpp.o"
   "plox.pdb"
   "plox"
 )

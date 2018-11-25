@@ -8,6 +8,9 @@
 #include <cstdlib>
 #include <math.h>
 
+#define SCREEN_WIDTH 720
+#define SCREEN_HEIGHT 720
+
 class Utils {
 public:
     static float randomf();

@@ -14,15 +14,16 @@
 class VertexBuffer {
 protected:
     unsigned int vboPos;
-    float* posBegin;
     unsigned int vao;
     size_t posSize;
     GLenum mode;
 
 public:
     VertexBuffer() = default;
-    VertexBuffer(float* posBegin, float* posEnd, GLenum mode);
-    virtual void Draw(bool rebind);
+
+    explicit VertexBuffer(GLenum mode);
+    void SetData(const float* posBegin, const float* posEnd);
+    void Draw();
 };
 
 class VertexBufferUv : public VertexBuffer {
@@ -32,7 +33,8 @@ private:
 
 public:
     VertexBufferUv() = default;
-    VertexBufferUv(float* posBegin, float* posEnd, float* uvBegin, float* uvEnd, GLenum mode);
+    explicit VertexBufferUv(GLenum mode);
+    void SetData(const float* posBegin, const float* posEnd, const float* uvBegin, const float* uvEnd);
 };
 
 class VertexBufferColor : public VertexBuffer {
@@ -43,8 +45,8 @@ private:
 
 public:
     VertexBufferColor() = default;
-    VertexBufferColor(float* posBegin, float* posEnd, float* colBegin, float* colEnd, GLenum mode);
-    void Draw(bool rebind) override;
+    explicit VertexBufferColor(GLenum mode);
+    void SetData(const float* posBegin, const float* posEnd, const float* colBegin, const float* colEnd);
 };
 
 #endif //PLOX_VERTEXBUFFER_H

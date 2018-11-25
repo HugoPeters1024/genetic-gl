@@ -96,6 +96,12 @@
 		<Unit filename="/home/hugo/cpp-projects/genetic-gl/Program.h">
 			<Option target="plox"/>
 		</Unit>
+		<Unit filename="/home/hugo/cpp-projects/genetic-gl/RenderFactory.cpp">
+			<Option target="plox"/>
+		</Unit>
+		<Unit filename="/home/hugo/cpp-projects/genetic-gl/RenderFactory.h">
+			<Option target="plox"/>
+		</Unit>
 		<Unit filename="/home/hugo/cpp-projects/genetic-gl/Utils.cpp">
 			<Option target="plox"/>
 		</Unit>

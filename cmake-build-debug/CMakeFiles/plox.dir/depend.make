@@ -5,6 +5,11 @@
 CMakeFiles/plox.dir/Program.cpp.o: ../Program.cpp
 CMakeFiles/plox.dir/Program.cpp.o: ../Program.h
 
+CMakeFiles/plox.dir/RenderFactory.cpp.o: ../Individual.h
+CMakeFiles/plox.dir/RenderFactory.cpp.o: ../RenderFactory.cpp
+CMakeFiles/plox.dir/RenderFactory.cpp.o: ../RenderFactory.h
+CMakeFiles/plox.dir/RenderFactory.cpp.o: ../VertexBuffer.h
+
 CMakeFiles/plox.dir/Utils.cpp.o: ../Utils.cpp
 CMakeFiles/plox.dir/Utils.cpp.o: ../Utils.h
 
@@ -13,6 +18,7 @@ CMakeFiles/plox.dir/VertexBuffer.cpp.o: ../VertexBuffer.h
 
 CMakeFiles/plox.dir/main.cpp.o: ../Individual.h
 CMakeFiles/plox.dir/main.cpp.o: ../Program.h
+CMakeFiles/plox.dir/main.cpp.o: ../RenderFactory.h
 CMakeFiles/plox.dir/main.cpp.o: ../Utils.h
 CMakeFiles/plox.dir/main.cpp.o: ../VertexBuffer.h
 CMakeFiles/plox.dir/main.cpp.o: ../main.cpp

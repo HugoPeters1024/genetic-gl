@@ -177,6 +177,33 @@ Program.cpp.s:
 	$(MAKE) -f CMakeFiles/plox.dir/build.make CMakeFiles/plox.dir/Program.cpp.s
 .PHONY : Program.cpp.s
 
+RenderFactory.o: RenderFactory.cpp.o
+
+.PHONY : RenderFactory.o
+
+# target to build an object file
+RenderFactory.cpp.o:
+	$(MAKE) -f CMakeFiles/plox.dir/build.make CMakeFiles/plox.dir/RenderFactory.cpp.o
+.PHONY : RenderFactory.cpp.o
+
+RenderFactory.i: RenderFactory.cpp.i
+
+.PHONY : RenderFactory.i
+
+# target to preprocess a source file
+RenderFactory.cpp.i:
+	$(MAKE) -f CMakeFiles/plox.dir/build.make CMakeFiles/plox.dir/RenderFactory.cpp.i
+.PHONY : RenderFactory.cpp.i
+
+RenderFactory.s: RenderFactory.cpp.s
+
+.PHONY : RenderFactory.s
+
+# target to generate assembly for a file
+RenderFactory.cpp.s:
+	$(MAKE) -f CMakeFiles/plox.dir/build.make CMakeFiles/plox.dir/RenderFactory.cpp.s
+.PHONY : RenderFactory.cpp.s
+
 Utils.o: Utils.cpp.o
 
 .PHONY : Utils.o
@@ -273,6 +300,9 @@ help:
 	@echo "... Program.o"
 	@echo "... Program.i"
 	@echo "... Program.s"
+	@echo "... RenderFactory.o"
+	@echo "... RenderFactory.i"
+	@echo "... RenderFactory.s"
 	@echo "... Utils.o"
 	@echo "... Utils.i"
 	@echo "... Utils.s"
