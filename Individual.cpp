@@ -53,8 +53,8 @@ Individual Individual::Mutate() {
     Individual result = Individual(this);
 
     for(int i=0; i<GENOME_SIZE * 3; i+=3) {
-        if (Utils::randomf() < MUTATION_RATE) result.vertices[i+0] = Utils::randomNonUniformf();
-        if (Utils::randomf() < MUTATION_RATE) result.vertices[i+1] = Utils::randomNonUniformf();
+       // if (Utils::randomf() < MUTATION_RATE) result.vertices[i+0] = Utils::randomNonUniformf();
+       // if (Utils::randomf() < MUTATION_RATE) result.vertices[i+1] = Utils::randomNonUniformf();
     }
     for (int i=0; i<GENOME_SIZE * 4; i+=4) {
         if (Utils::randomf() < MUTATION_RATE) result.colors[i + 0] = Utils::randomf();

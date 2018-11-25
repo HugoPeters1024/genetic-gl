@@ -22,6 +22,10 @@ vector
 GL/gl.h
 -
 
+/home/hugo/cpp-projects/genetic-gl/RenderFactory.cpp
+RenderFactory.h
+/home/hugo/cpp-projects/genetic-gl/RenderFactory.h
+
 /home/hugo/cpp-projects/genetic-gl/RenderFactory.h
 cstdlib
 -

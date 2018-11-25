@@ -22,7 +22,7 @@
 static VertexBufferUv vbQuad;
 static VertexBufferColor vbTriangles;
 static Program shader;
-static std::vector<char> fbSource;
+static std::vector<unsigned char> fbSource;
 float iTime = 0.0f;
 double prevScore = std::numeric_limits<double>::max();
 Individual* boi;
@@ -84,7 +84,7 @@ void setup(int width, int height)
 {
     std::cout << "Setting things up" << std::endl;
     RenderFactory::Startup();
-    fbSource = std::vector<char>(static_cast<unsigned long>(width * height * 4L));
+    fbSource = std::vector<unsigned char>(static_cast<unsigned long>(width * height * 4L));
     for(int i=0; i<fbSource.capacity(); i+=4)
     {
         fbSource[i+0] = (char)255;
@@ -99,14 +99,14 @@ void setup(int width, int height)
 double GetScore()
 {
     size_t size = SCREEN_WIDTH * SCREEN_HEIGHT * sizeof(char) * 3;
-    char* data = (char*)malloc(size);
+    unsigned char* data = (unsigned char*)malloc(size);
     glReadPixels(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT, GL_RGB, GL_BYTE, data);
     unsigned long sum = 0;
     for(int y=0; y<SCREEN_HEIGHT; y++)
     {
         for(int x=0; x<SCREEN_WIDTH*3; x+=3)
         {
-            char diff;
+            long diff;
             diff = data[x + y * SCREEN_WIDTH + 0] - fbSource[x + y * SCREEN_WIDTH + 0];
             sum += diff * diff;
             diff = data[x + y * SCREEN_WIDTH + 1] - fbSource[x + y * SCREEN_WIDTH + 1];
@@ -115,7 +115,6 @@ double GetScore()
             sum += diff * diff;
         }
     }
-    glReadBuffer(GL_BACK);
     free(data);
     return sqrt(sum);
 }
