@@ -23,7 +23,7 @@
 static VertexBufferUv vbQuad;
 static VertexBufferColor vbTriangles;
 static Program shader;
-static std::vector<unsigned char> fbSource;
+static float* fbSource;
 float iTime = 0.0f;
 double prevScore = std::numeric_limits<double>::max();
 Individual* boi;
@@ -86,16 +86,17 @@ void setup(int width, int height)
 {
     std::cout << "Setting things up" << std::endl;
     RenderFactory::Startup();
-    fbSource = std::vector<unsigned char>(static_cast<unsigned long>(width * height * 3L));
-    for(int i=0; i<fbSource.capacity(); i+=3)
+    fbSource = (float*)malloc(SCREEN_WIDTH * SCREEN_HEIGHT * sizeof(float) * 4);
+    for(int i=0; i<SCREEN_WIDTH * SCREEN_HEIGHT * 4; i+=4)
     {
-        fbSource[i+0] = (unsigned char)255;
-        fbSource[i+1] = (unsigned char)0;
-        fbSource[i+2] = (unsigned char)0;
+        fbSource[i+0] = 1.0f;
+        fbSource[i+1] = 0.0f;
+        fbSource[i+2] = 0.0f;
+        fbSource[i+3] = 1.0f;
     }
     shader = Program(vertexShaderSource, fragmentShaderSource);
     boi = new Individual();
-    population = new Population(fbSource.data());
+    population = new Population(fbSource);
 }
 
 void render(int width, int height)
@@ -142,7 +143,7 @@ int main(int argc, char** argv) {
     glfwGetFramebufferSize(Utils::window, &width, &height);
 
     // Enable vsync
-    glfwSwapInterval(1);
+    glfwSwapInterval(0);
 
     setup(width, height);
 

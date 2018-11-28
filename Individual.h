@@ -7,15 +7,17 @@
 #define GL3_PROTOTYPES 1
 
 #include <GL/gl.h>
+#include <assert.h>
 #include "VertexBuffer.h"
 
 #ifndef PLOX_INDIVIDUAL_H
 #define PLOX_INDIVIDUAL_H
 
 
-#define GENOME_SIZE 80
-#define MUTATION_RATE 0.1f
-#define CROSS_OVER_RATE 0.30f
+// Must be a multiple of three
+#define GENOME_SIZE 3
+#define MUTATION_RATE 0.05f
+#define CROSS_OVER_RATE 0.3f
 
 
 class Individual {
@@ -31,7 +33,7 @@ public:
     Individual(const Individual* source);
     Individual(const Individual &father, const Individual &mother);
     ~Individual();
-    Individual Mutate();
+    void Mutate();
 };
 
 

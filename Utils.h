@@ -23,8 +23,9 @@ public:
     static GLFWwindow* window;
 
     static float randomf();
+    static double randomlf();
     static float randomNonUniformf();
-    static double GetScore(unsigned char* fbSource);
+    static double GetScore(float* fbSource);
 };
 
 

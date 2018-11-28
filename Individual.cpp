@@ -12,7 +12,6 @@
 Individual::Individual() {
     this->vertices = std::vector<float>(GENOME_SIZE * 3);
     this->colors = std::vector<float>(GENOME_SIZE * 4);
-
     this->Randomize();
 }
 
@@ -20,7 +19,7 @@ Individual::Individual(const Individual &father, const Individual &mother) {
     this->vertices = std::vector<float>(GENOME_SIZE * 3);
     this->colors = std::vector<float>(GENOME_SIZE * 4);
     bool unary = true;
-    for(int i=0, j=0; i<GENOME_SIZE*3; i+=3, j+=4)
+    for(int i=0; i<GENOME_SIZE*3; i+=3 )
     {
         if (Utils::randomf() < CROSS_OVER_RATE) unary = !unary;
         const Individual* src = unary ? &father : &mother;
@@ -28,6 +27,12 @@ Individual::Individual(const Individual &father, const Individual &mother) {
         this->vertices[i+1] = src->vertices[i+1];
         this->vertices[i+2] = src->vertices[i+2];
 
+    }
+
+    for(int j=0; j<GENOME_SIZE*4; j+=4)
+    {
+        if (Utils::randomf() < CROSS_OVER_RATE) unary = !unary;
+        const Individual* src = unary ? &father : &mother;
         this->colors[j+0] = src->colors[j+0];
         this->colors[j+1] = src->colors[j+1];
         this->colors[j+2] = src->colors[j+2];
@@ -45,24 +50,21 @@ void Individual::Randomize() {
         this->colors[i+0] = Utils::randomf();
         this->colors[i+1] = Utils::randomf();
         this->colors[i+2] = Utils::randomf();
-        this->colors[i+3] = Utils::randomf() * 0.2f;
+        this->colors[i+3] = Utils::randomf() * 0.01f;
     }
 }
 
-Individual Individual::Mutate() {
-    Individual result = Individual(this);
-
+void Individual::Mutate() {
     for(int i=0; i<GENOME_SIZE * 3; i+=3) {
-        if (Utils::randomf() < MUTATION_RATE) result.vertices[i+0] = Utils::randomNonUniformf();
-        if (Utils::randomf() < MUTATION_RATE) result.vertices[i+1] = Utils::randomNonUniformf();
+        if (Utils::randomf() < MUTATION_RATE) this->vertices[i+0] = Utils::randomf() * 2 - 1;
+        if (Utils::randomf() < MUTATION_RATE) this->vertices[i+1] = Utils::randomf() * 2 - 1;
     }
     for (int i=0; i<GENOME_SIZE * 4; i+=4) {
-        if (Utils::randomf() < MUTATION_RATE) result.colors[i + 0] = Utils::randomf();
-        if (Utils::randomf() < MUTATION_RATE) result.colors[i + 1] = Utils::randomf();
-        if (Utils::randomf() < MUTATION_RATE) result.colors[i + 2] = Utils::randomf();
-        if (Utils::randomf() < MUTATION_RATE) result.colors[i + 3] = Utils::randomf() * 0.2f;
+        if (Utils::randomf() < MUTATION_RATE) this->colors[i + 0] = Utils::randomf();
+        if (Utils::randomf() < MUTATION_RATE) this->colors[i + 1] = Utils::randomf();
+        if (Utils::randomf() < MUTATION_RATE) this->colors[i + 2] = Utils::randomf();
+        if (Utils::randomf() < MUTATION_RATE) this->colors[i + 3] = Utils::randomf() * 0.5f;
     }
-    return result;
 }
 
 Individual::Individual(const Individual* source) {

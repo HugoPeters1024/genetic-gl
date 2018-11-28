@@ -14,14 +14,17 @@
 #include "Population.h"
 #include "RenderFactory.h"
 
-#define POP_SIZE 10
+#define POP_SIZE 100
 
 class Population {
 private:
     std::vector<Individual> buffer;
-    unsigned char* fbSource;
+    std::vector<Individual> swapBuffer;
+    double* scores;
+    float* fbSource;
+    Individual* PickWinner(double scoreSum);
 public:
-    explicit Population(unsigned char* fbSource);
+    explicit Population(float* fbSource);
     void NextGeneration();
 
 };
