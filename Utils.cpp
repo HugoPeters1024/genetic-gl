@@ -34,7 +34,7 @@ double Utils::GetScore(float* fbSource) {
         float diffG = frameBuffer[i + 1] - fbSource[i + 1];
         float diffB = frameBuffer[i + 2] - fbSource[i + 2];
         float diffA = frameBuffer[i + 3] - fbSource[i + 3];
-        float preSum = sqrt(diffR * diffR + diffG * diffG + diffB * diffB + diffA * diffA);
+        float preSum = sqrt(diffR * diffR + diffG * diffG + diffB * diffB);
         sum += preSum;
     }
     return sum;

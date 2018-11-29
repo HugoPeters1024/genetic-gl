@@ -96,9 +96,9 @@ void setup(int width, int height)
         fbSource[j + 1] = (float)image[i + 1] / 255.0f;
         fbSource[j + 2] = (float)image[i + 2] / 255.0f;
         fbSource[j + 3] = 1.0f;
-       fbSource[j + 0] = 0;
-      fbSource[j + 1] = 0;
-       fbSource[j + 2] = 1;
+   //  fbSource[j + 0] = (float)j / (SCREEN_HEIGHT * SCREEN_WIDTH * 4);
+    // fbSource[j + 1] = (float)j / (SCREEN_HEIGHT * SCREEN_WIDTH * 4) * -1 + 1;
+     // fbSource[j + 2] = 0;
        printf("%f\n", fbSource[j + 0]);
     }
 
