@@ -20,38 +20,41 @@ void Population::NextGeneration() {
     for(int i=0; i<POP_SIZE; i++)
     {
         glClear(GL_COLOR_BUFFER_BIT);
-        buffer[i].Mutate();
         RenderFactory::RenderIndividual(buffer[i]);
         scores[i] = Utils::GetScore(fbSource);
         glfwSwapBuffers(Utils::window);
         glfwPollEvents();
     }
 
-    // Sort the population on descending scores
-    std::sort(scores, scores + POP_SIZE);
-    float maxv = (*std::max_element(scores, scores + POP_SIZE));
-   // double maxv = SCREEN_WIDTH * SCREEN_HEIGHT;
+    double maxv = (*std::max_element(scores, scores + POP_SIZE));
+    // Invert the scoring
+   // double maxv = SCREEN_HEIGHT * SCREEN_WIDTH * 4;
     std::transform(scores, scores + POP_SIZE, scores, [maxv](double &v){ return maxv - v; });
 
+    double maxScore = 0.0;
+    int maxIndex = 0;
     for(int i=0; i<POP_SIZE; i++)
     {
         if (i % 10 == 0)
         printf("%lf\n", scores[i]);
-    }
-    printf("\n");
-    double scoreSum = std::accumulate(scores, scores + POP_SIZE, 0.0);
-    //scoreSum = 0;
-
-    for(int i=0; i<POP_SIZE; i++)
-    {
-        Individual* temp = new Individual(PickWinner(scoreSum), PickWinner(scoreSum));
-        std::swap(swapBuffer[0], *temp);
-        delete temp;
-
         if (scores[i] > maxScore)
         {
+            maxIndex = i;
             maxScore = scores[i];
         }
+    }
+    printf("max: %lf / %lf\%\n\n", maxScore, maxScore / (SCREEN_WIDTH * SCREEN_HEIGHT * 4.0) * 100.0);
+    double scoreSum = std::accumulate(scores, scores + POP_SIZE, 0.0);
+
+    Individual* best = new Individual(buffer[maxIndex]);
+    std::swap(swapBuffer[0], *best);
+    delete best;
+    for(int i=1; i<POP_SIZE; i++)
+    {
+        Individual* temp = new Individual(PickWinner(scoreSum), PickWinner(scoreSum));
+        temp->Mutate();
+        std::swap(swapBuffer[i], *temp);
+        delete temp;
     }
 
     buffer.swap(swapBuffer);
@@ -59,13 +62,15 @@ void Population::NextGeneration() {
 
 Individual* Population::PickWinner(double scoreSum) {
     double rf = Utils::randomlf();
-    double winner = rf * scoreSum;
+    double winner = rf * scoreSum + 1;
     int winnerIndex = -1;
     double winnerSum = 0;
     while(winnerSum < winner)
     {
         winnerSum += scores[winnerIndex+1];
         winnerIndex += 1;
+        if (winnerIndex == POP_SIZE-1)
+            break;
     }
     return &buffer[winnerIndex];
 }

@@ -87,13 +87,21 @@ void setup(int width, int height)
     std::cout << "Setting things up" << std::endl;
     RenderFactory::Startup();
     fbSource = (float*)malloc(SCREEN_WIDTH * SCREEN_HEIGHT * sizeof(float) * 4);
-    for(int i=0; i<SCREEN_WIDTH * SCREEN_HEIGHT * 4; i+=4)
+
+    char* file = const_cast<char *>("monalisa.bmp");
+    auto image = Utils::ReadBMP(file);
+    for(int i=0, j=0; i<SCREEN_WIDTH * SCREEN_HEIGHT * 3; i+=3, j+=4)
     {
-        fbSource[i+0] = 1.0f;
-        fbSource[i+1] = 0.0f;
-        fbSource[i+2] = 0.0f;
-        fbSource[i+3] = 1.0f;
+        fbSource[j + 0] = (float)image[i + 0] / 255.0f;
+        fbSource[j + 1] = (float)image[i + 1] / 255.0f;
+        fbSource[j + 2] = (float)image[i + 2] / 255.0f;
+        fbSource[j + 3] = 1.0f;
+       fbSource[j + 0] = 0;
+      fbSource[j + 1] = 0;
+       fbSource[j + 2] = 1;
+       printf("%f\n", fbSource[j + 0]);
     }
+
     shader = Program(vertexShaderSource, fragmentShaderSource);
     boi = new Individual();
     population = new Population(fbSource);
@@ -112,7 +120,6 @@ void render(int width, int height)
         glUniform1f(0, iTime);
 
         population->NextGeneration();
-        glfwSwapBuffers(Utils::window);
     }
 }
 

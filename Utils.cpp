@@ -29,16 +29,41 @@ float Utils::randomNonUniformf() {
 double Utils::GetScore(float* fbSource) {
     glReadPixels(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT, GL_RGBA, GL_FLOAT, frameBuffer);
     double sum = 0;
-    for (int y = 0; y < SCREEN_HEIGHT; y++) {
-        for (int x = 0; x < SCREEN_WIDTH * 4; x += 4) {
-            float diffR = frameBuffer[x + y * SCREEN_WIDTH * 4 + 0] - fbSource[x + y * SCREEN_WIDTH * 4 + 0];
-            float diffG = frameBuffer[x + y * SCREEN_WIDTH * 4 + 1] - fbSource[x + y * SCREEN_WIDTH * 4 + 1];
-            float diffB = frameBuffer[x + y * SCREEN_WIDTH * 4 + 2] - fbSource[x + y * SCREEN_WIDTH * 4 + 2];
-            float diffA = frameBuffer[x + y * SCREEN_WIDTH * 4 + 3] - fbSource[x + y * SCREEN_WIDTH * 4 + 3];
-            sum += sqrt(diffR * diffR + diffG * diffG + diffB * diffB + diffA * diffA) / sqrt(4.0);
-        }
+    for (int i = 0; i < SCREEN_WIDTH * SCREEN_HEIGHT* 4; i += 4) {
+        float diffR = frameBuffer[i + 0] - fbSource[i + 0];
+        float diffG = frameBuffer[i + 1] - fbSource[i + 1];
+        float diffB = frameBuffer[i + 2] - fbSource[i + 2];
+        float diffA = frameBuffer[i + 3] - fbSource[i + 3];
+        float preSum = sqrt(diffR * diffR + diffG * diffG + diffB * diffB + diffA * diffA);
+        sum += preSum;
     }
     return sum;
 }
 
 GLFWwindow* Utils::window = nullptr;
+
+unsigned char* Utils::ReadBMP(char* filename)
+{
+    int i;
+    FILE* f = fopen(filename, "rb");
+    unsigned char info[54];
+    fread(info, sizeof(unsigned char), 54, f); // read the 54-byte header
+
+    // extract image height and width from header
+    int width = *(int*)&info[18];
+    int height = *(int*)&info[22];
+
+    int size = 3 * width * height;
+    unsigned char* data = new unsigned char[size]; // allocate 3 bytes per pixel
+    fread(data, sizeof(unsigned char), size, f); // read the rest of the data at once
+    fclose(f);
+
+    for(i = 0; i < size; i += 3)
+    {
+        unsigned char tmp = data[i];
+        data[i] = data[i+2];
+        data[i+2] = tmp;
+    }
+
+    return data;
+}

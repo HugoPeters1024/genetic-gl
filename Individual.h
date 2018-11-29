@@ -15,9 +15,9 @@
 
 
 // Must be a multiple of three
-#define GENOME_SIZE 3
-#define MUTATION_RATE 0.05f
-#define CROSS_OVER_RATE 0.3f
+#define GENOME_SIZE 180
+#define MUTATION_RATE 0.01f
+#define CROSS_OVER_RATE 0.7f
 
 
 class Individual {

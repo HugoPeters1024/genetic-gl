@@ -15,8 +15,8 @@
 #include <GL/gl.h>
 #include <GLFW/glfw3.h>
 
-#define SCREEN_WIDTH 720
-#define SCREEN_HEIGHT 720
+#define SCREEN_WIDTH 184
+#define SCREEN_HEIGHT 275
 
 class Utils {
 public:
@@ -26,6 +26,7 @@ public:
     static double randomlf();
     static float randomNonUniformf();
     static double GetScore(float* fbSource);
+    static unsigned char* ReadBMP(char* filename);
 };
 
 

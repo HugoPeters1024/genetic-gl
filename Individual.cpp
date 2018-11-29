@@ -50,20 +50,20 @@ void Individual::Randomize() {
         this->colors[i+0] = Utils::randomf();
         this->colors[i+1] = Utils::randomf();
         this->colors[i+2] = Utils::randomf();
-        this->colors[i+3] = Utils::randomf() * 0.01f;
+        this->colors[i+3] = Utils::randomf() * 0.05f;
     }
 }
 
 void Individual::Mutate() {
     for(int i=0; i<GENOME_SIZE * 3; i+=3) {
-        if (Utils::randomf() < MUTATION_RATE) this->vertices[i+0] = Utils::randomf() * 2 - 1;
-        if (Utils::randomf() < MUTATION_RATE) this->vertices[i+1] = Utils::randomf() * 2 - 1;
+        if (Utils::randomf() < MUTATION_RATE) this->vertices[i+0] = Utils::randomNonUniformf();
+        if (Utils::randomf() < MUTATION_RATE) this->vertices[i+1] = Utils::randomNonUniformf();
     }
     for (int i=0; i<GENOME_SIZE * 4; i+=4) {
         if (Utils::randomf() < MUTATION_RATE) this->colors[i + 0] = Utils::randomf();
         if (Utils::randomf() < MUTATION_RATE) this->colors[i + 1] = Utils::randomf();
         if (Utils::randomf() < MUTATION_RATE) this->colors[i + 2] = Utils::randomf();
-        if (Utils::randomf() < MUTATION_RATE) this->colors[i + 3] = Utils::randomf() * 0.5f;
+        if (Utils::randomf() < MUTATION_RATE) this->colors[i + 3] = Utils::randomf() * 0.1f;
     }
 }
 
