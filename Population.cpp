@@ -28,7 +28,7 @@ void Population::NextGeneration() {
 
     double maxv = (*std::max_element(scores, scores + POP_SIZE));
     // Invert the scoring
-   // double maxv = SCREEN_HEIGHT * SCREEN_WIDTH * 3;
+    //double maxv = SCREEN_WIDTH * SCREEN_HEIGHT * 4;
     std::transform(scores, scores + POP_SIZE, scores, [maxv](double &v){ return maxv - v; });
 
     double maxScore = 0.0;
@@ -43,7 +43,7 @@ void Population::NextGeneration() {
             maxScore = scores[i];
         }
     }
-    printf("max: %lf / %lf\%\n\n", maxScore, maxScore / (SCREEN_WIDTH * SCREEN_HEIGHT * 3.0) * 100.0);
+    printf("max: %lf / %lf\%\n\n", maxScore, maxScore / (SCREEN_WIDTH * SCREEN_HEIGHT * 4) * 100.0);
     double scoreSum = std::accumulate(scores, scores + POP_SIZE, 0.0);
 
     Individual* best = new Individual(buffer[maxIndex]);

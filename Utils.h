@@ -14,6 +14,7 @@
 
 #include <GL/gl.h>
 #include <GLFW/glfw3.h>
+#include "immintrin.h"
 
 #define SCREEN_WIDTH 184
 #define SCREEN_HEIGHT 275

@@ -28,16 +28,35 @@ float Utils::randomNonUniformf() {
 
 double Utils::GetScore(float* fbSource) {
     glReadPixels(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT, GL_RGBA, GL_FLOAT, frameBuffer);
-    double sum = 0;
-    for (int i = 0; i < SCREEN_WIDTH * SCREEN_HEIGHT* 4; i += 4) {
-        float diffR = frameBuffer[i + 0] - fbSource[i + 0];
-        float diffG = frameBuffer[i + 1] - fbSource[i + 1];
-        float diffB = frameBuffer[i + 2] - fbSource[i + 2];
-        float diffA = frameBuffer[i + 3] - fbSource[i + 3];
-        float preSum = sqrt(diffR * diffR + diffG * diffG + diffB * diffB);
-        sum += preSum;
+
+    __m256 result = _mm256_set1_ps(0);
+    for(int i=0; i<SCREEN_WIDTH * SCREEN_HEIGHT * 4; i+=8)
+    {
+        __m256 frameBufferAVX = _mm256_loadu_ps(frameBuffer + i);
+        __m256 fbSourceAVX = _mm256_loadu_ps(fbSource + i);
+
+        // Substracted diff
+        __m256 diff = _mm256_sub_ps(frameBufferAVX, fbSourceAVX);
+
+        // Square the values
+        __m256 sqr = _mm256_mul_ps(diff, diff);
+
+        // Sum up the result;
+        result = _mm256_add_ps(result, sqr);
     }
-    return sum;
+
+    // Extract both halves
+    __m128 left = _mm256_extractf128_ps(result, 0);
+    left[3] = 0;
+    __m128 right = _mm256_extractf128_ps(result, 1);
+    right[3] = 0;
+    __m128 summed = _mm_add_ps(left, right);
+    // Calculate prefix sum
+    summed = _mm_hadd_ps(summed, summed);
+    summed = _mm_hadd_ps(summed, summed);
+
+    // Sum is now in the first register.
+    return summed[0];
 }
 
 GLFWwindow* Utils::window = nullptr;
@@ -67,3 +86,5 @@ unsigned char* Utils::ReadBMP(char* filename)
 
     return data;
 }
+
+

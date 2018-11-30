@@ -13,7 +13,7 @@ void RenderFactory::RenderIndividual(const Individual &individual) {
 
 
 void RenderFactory::Startup() {
-    Individual_buffer = VertexBufferColor(GL_TRIANGLES);
+    Individual_buffer = VertexBufferColor(GL_TRIANGLE_STRIP);
 }
 
 

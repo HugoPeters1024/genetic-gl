@@ -63,7 +63,7 @@ void Individual::Mutate() {
         if (Utils::randomf() < MUTATION_RATE) this->colors[i + 0] = Utils::randomf();
         if (Utils::randomf() < MUTATION_RATE) this->colors[i + 1] = Utils::randomf();
         if (Utils::randomf() < MUTATION_RATE) this->colors[i + 2] = Utils::randomf();
-        if (Utils::randomf() < MUTATION_RATE) this->colors[i + 3] = Utils::randomf() * 0.1f;
+        if (Utils::randomf() < MUTATION_RATE) this->colors[i + 3] = Utils::randomf() * 0.05f;
     }
 }
 
