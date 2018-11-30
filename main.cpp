@@ -19,14 +19,14 @@
 #include "Individual.h"
 #include "RenderFactory.h"
 #include "Population.h"
+#include "GridIndividual.h"
 
 static VertexBufferUv vbQuad;
 static VertexBufferColor vbTriangles;
 static Program shader;
 static float* fbSource;
 float iTime = 0.0f;
-double prevScore = std::numeric_limits<double>::max();
-Individual* boi;
+GridIndividual* boi;
 Population* population;
 
 
@@ -101,9 +101,9 @@ void setup(int width, int height)
      //fbSource[j + 2] = 0;
        //printf("%f\n", fbSource[j + 0]);
     }
+    boi = new GridIndividual();
 
     shader = Program(vertexShaderSource, fragmentShaderSource);
-    boi = new Individual();
     population = new Population(fbSource);
 }
 

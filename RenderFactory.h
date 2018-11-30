@@ -9,15 +9,17 @@
 #include <cstdlib>
 #include "VertexBuffer.h"
 #include "Individual.h"
+#include "GridIndividual.h"
 
 class RenderFactory {
 public:
-    static const float* Individual_vertices;
-    static const float* Individual_colors;
     static VertexBufferColor Individual_buffer;
+    static const float* GridIndividual_vertices;
+    static VertexBufferColor GridIndividual_buffer;
 
 public:
     static void RenderIndividual(const Individual &individual);
+    static void RenderIndividual(const GridIndividual &individual);
     static void Startup();
 
 };
