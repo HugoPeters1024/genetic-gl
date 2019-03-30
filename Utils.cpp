@@ -42,7 +42,7 @@ double Utils::GetScore(float* fbSource) {
         __m256 sqr = _mm256_mul_ps(diff, diff);
 
         // Sum up the result;
-        result = _mm256_add_ps(result, sqr);
+        result = _mm256_add_ps(sqr, result);
     }
 
     // Extract both halves

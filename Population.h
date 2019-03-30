@@ -14,7 +14,7 @@
 #include "Population.h"
 #include "RenderFactory.h"
 
-#define POP_SIZE 5
+#define POP_SIZE 15
 
 class Population {
 private:

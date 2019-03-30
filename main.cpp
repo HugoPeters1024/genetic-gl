@@ -88,7 +88,7 @@ void setup(int width, int height)
     RenderFactory::Startup();
     fbSource = (float*)malloc(SCREEN_WIDTH * SCREEN_HEIGHT * sizeof(float) * 4);
 
-    char* file = const_cast<char *>("monalisa.bmp");
+    char* file = const_cast<char*>("monalisa.bmp");
     auto image = Utils::ReadBMP(file);
     for(int i=0, j=0; i<SCREEN_WIDTH * SCREEN_HEIGHT * 3; i+=3, j+=4)
     {
@@ -96,10 +96,11 @@ void setup(int width, int height)
         fbSource[j + 1] = (float)image[i + 1] / 255.0f;
         fbSource[j + 2] = (float)image[i + 2] / 255.0f;
         fbSource[j + 3] = 0.0f;
-    // fbSource[j + 0] = (float)j / (SCREEN_HEIGHT * SCREEN_WIDTH * 4);
-     //fbSource[j + 1] = (float)j / (SCREEN_HEIGHT * SCREEN_WIDTH * 4) * -1 + 1;
-     //fbSource[j + 2] = 0;
-       //printf("%f\n", fbSource[j + 0]);
+        //fbSource[j + 0] = (float)j / (SCREEN_HEIGHT * SCREEN_WIDTH * 4);
+        //fbSource[j + 1] = (float)j / (SCREEN_HEIGHT * SCREEN_WIDTH * 4) * -1 + 1;
+        //fbSource[j + 2] = 0;
+       printf("r: %f, g: %f, b: %f\n", fbSource[j + 0], fbSource[j+1], fbSource[j+2]);
+       //printf("%f\n", fbSource[j+0]);
     }
     boi = new GridIndividual();
 

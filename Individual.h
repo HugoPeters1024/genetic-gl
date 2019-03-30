@@ -15,8 +15,8 @@
 
 
 // Must be a multiple of three
-#define GENOME_SIZE 180
-#define MUTATION_RATE 0.005f
+#define GENOME_SIZE 120
+#define MUTATION_RATE 0.01f
 #define CROSS_OVER_RATE 0.3f
 
 
